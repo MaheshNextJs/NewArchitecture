@@ -21,18 +21,19 @@ const DrawerNavigator: React.FC = () => {
         },
         drawerLabelStyle: {
           fontSize: 18,
-          fontWeight: 'bold',
+          textAlign: 'center',
         },
         drawerActiveTintColor: '#ffffff',
         drawerActiveBackgroundColor: '#2980b9',
         drawerInactiveTintColor: '#808080',
         drawerItemStyle: {
-          marginBottom: 15,
+          top: 15,
         },
       }}>
       <Drawer.Screen name="Home" component={HomeScreen} />
       <Drawer.Screen name="Login" component={LoginScreen} />
       <Drawer.Screen name="Contact" component={ContactScreen} />
+      <Drawer.Screen name="Logout" component={HomeScreen} />
     </Drawer.Navigator>
   );
 };

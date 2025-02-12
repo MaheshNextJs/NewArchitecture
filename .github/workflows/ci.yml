@@ -63,12 +63,12 @@ jobs:
       - name: Build iOS app
         run: |
           cd ios
-          xcodebuild -workspace YourAppName.xcworkspace -scheme YourAppName -sdk iphoneos -configuration AppStoreDistribution archive -archivePath $PWD/build/YourAppName.xcarchive
+          xcodebuild -workspace NewArchitecture.xcworkspace -scheme NewArchitecture -sdk iphoneos -configuration AppStoreDistribution archive -archivePath $PWD/build/NewArchitecture.xcarchive
 
       - name: Export iOS app
         run: |
           cd ios
-          xcodebuild -exportArchive -archivePath $PWD/build/YourAppName.xcarchive -exportOptionsPlist exportOptions.plist -exportPath $PWD/build
+          xcodebuild -exportArchive -archivePath $PWD/build/NewArchitecture.xcarchive -exportOptionsPlist exportOptions.plist -exportPath $PWD/build
 
       - name: Upload iOS build to App Center
         uses: microsoft/appcenter-cli-action@v2
@@ -76,4 +76,4 @@ jobs:
           app_name: 'NewArchitecture-iOS'
           app_owner: 'NewArchitecture'
           token: ${{ secrets.New_Architecture }}
-          file: 'ios/build/YourAppName.ipa'
+          file: 'ios/build/NewArchitecture.ipa'

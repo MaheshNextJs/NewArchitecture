@@ -27,5 +27,53 @@ jobs:
       - name: Run tests
         run: npm test
 
-      - name: Build the app
-        run: npm run build
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+
+      - name: Install Android SDK
+        uses: android-actions/setup-android@v2
+
+      - name: Build Android app
+        run: |
+          cd android
+          ./gradlew assembleRelease
+
+      - name: Upload Android build to App Center
+        uses: microsoft/appcenter-cli-action@v1
+        with:
+          app_name: 'NewArchitecture-Android'
+          app_owner: 'NewArchitecture'
+          token: ${{ secrets.New_Architecture }}
+          file: 'android/app/build/outputs/apk/release/app-release.apk'
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.7'
+
+      - name: Install CocoaPods
+        run: |
+          sudo gem install cocoapods
+          cd ios
+          pod install
+
+      - name: Build iOS app
+        run: |
+          cd ios
+          xcodebuild -workspace YourAppName.xcworkspace -scheme YourAppName -sdk iphoneos -configuration AppStoreDistribution archive -archivePath $PWD/build/YourAppName.xcarchive
+
+      - name: Export iOS app
+        run: |
+          cd ios
+          xcodebuild -exportArchive -archivePath $PWD/build/YourAppName.xcarchive -exportOptionsPlist exportOptions.plist -exportPath $PWD/build
+
+      - name: Upload iOS build to App Center
+        uses: microsoft/appcenter-cli-action@v1
+        with:
+          app_name: 'NewArchitecture-iOS'
+          app_owner: 'NewArchitecture'
+          token: ${{ secrets.New_Architecture }}
+          file: 'ios/build/YourAppName.ipa'

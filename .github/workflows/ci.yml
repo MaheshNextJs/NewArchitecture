@@ -42,7 +42,7 @@ jobs:
           ./gradlew assembleRelease
 
       - name: Upload Android build to App Center
-        uses: microsoft/appcenter-cli-action@v1
+        uses: microsoft/appcenter-cli-action@v2
         with:
           app_name: 'NewArchitecture-Android'
           app_owner: 'NewArchitecture'
@@ -71,7 +71,7 @@ jobs:
           xcodebuild -exportArchive -archivePath $PWD/build/YourAppName.xcarchive -exportOptionsPlist exportOptions.plist -exportPath $PWD/build
 
       - name: Upload iOS build to App Center
-        uses: microsoft/appcenter-cli-action@v1
+        uses: microsoft/appcenter-cli-action@v2
         with:
           app_name: 'NewArchitecture-iOS'
           app_owner: 'NewArchitecture'
